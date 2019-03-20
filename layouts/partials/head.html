@@ -28,6 +28,13 @@
 {{ $style := resources.Get "scss/main.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
+{{ range $val := $.Site.Params.customSCSS }}
+{{ if gt (len $val) 0 }}
+{{ $custom_style := resources.Get $val | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" type="text/css" href="{{ $custom_style.Permalink }}">
+{{ end }}
+{{ end }}
+
 {{ range $val := $.Site.Params.customCSS }}
 {{ if gt (len $val) 0 }}
 <link rel="stylesheet" type="text/css" href="{{ $val }}">
